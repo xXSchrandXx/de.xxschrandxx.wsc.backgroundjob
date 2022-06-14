@@ -29,9 +29,12 @@
                 {foreach from=$objects item=object}
                     <tr class="jsObjectActionObject" data-object-id="{@$object->jobID}">
                         <td class="columnIcon">
+							<a href="#" title="{lang}wcf.page.backgroundjobList.button.info{/lang}" class="backgroundjobInfoButton jsTooltip">
+								<span class="icon icon16 fa-info"></span>
+							</a>
 							{objectAction action="delete" objectTitle=$object->jobID}
 							<a href="#" title="{lang}wcf.page.backgroundjobList.button.execute{/lang}" class="backgroundjobExecuteButton jsTooltip">
-								<span class="icon icon16 fa-wifi"></span>
+								<span class="icon icon16 fa-play"></span>
 							</a>
                             {event name='rowButtons'}
                         </td>
@@ -52,8 +55,14 @@
 <script data-relocate="true">
 	require(["xXSchrandXx/Backgroundjob/BackgroundjobExecute", "Language"], function(BackgroundjobExecute, Language) {
 		Language.addObject({
-			'wcf.page.backgroundjobList.button.execute.result': '{lang}wcf.page.backgroundjobList.button.execute.result{/lang}'
+			'wcf.global.success': '{lang}wcf.global.success{/lang}'
 		});
 		new BackgroundjobExecute.default();
+	});
+	require(["xXSchrandXx/Backgroundjob/BackgroundjobInfo", "Language"], function(BackgroundjobInfo, Language) {
+		Language.addObject({
+			'wcf.global.success': '{lang}wcf.global.success{/lang}'
+		});
+		new BackgroundjobInfo.default();
 	});
 </script>

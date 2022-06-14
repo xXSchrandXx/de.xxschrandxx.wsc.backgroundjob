@@ -1,8 +1,6 @@
-import { DatabaseObjectActionResponse } from "WoltLabSuite/Core/Ajax/Data";
 import * as Ajax from "WoltLabSuite/Core/Ajax";
-import * as UiDialog from "WoltLabSuite/Core/Ui/Dialog";
+import * as UiNotification from "WoltLabSuite/Core/Ui/Notification";
 import * as Language from "WoltLabSuite/Core/Language";
-import { setTitle } from "WoltLabSuite/Core/Ui/Dialog";
 
 export class BackgroundjobExecute {
     public constructor() {
@@ -29,20 +27,11 @@ export class BackgroundjobExecute {
                     }
                 };
             },
-            _ajaxSuccess: (data: DatabaseObjectActionResponse) => {
-                UiDialog.open({
-                    _dialogSetup: () => {
-                        return {
-                            id: 'BackgroundjobExecuteDialog',
-                            source: null,
-                            options: {
-                                onShow: function(): void {
-                                    setTitle('BackgroundjobExecuteDialog', Language.get('wcf.page.backgroundjobList.button.execute.result'));
-                                }
-                            }
-                        }
-                    }
-                }, JSON.stringify(data['returnValues'][objectID]));
+            _ajaxSuccess: () => {
+                UiNotification.show(Language.get('wcf.global.success'), () => {
+                    window.location.reload();
+                });
+                element.remove();
             }
         });
     }

@@ -29,10 +29,16 @@ class Backgroundjob extends DatabaseObject
         $unserializedJob = null;
         try {
             $unserializedJob = \unserialize($this->job);
+            if ($unserializedJob) {
+                BackgroundQueueHandler::getInstance()->performJob($unserializedJob, true);
+            }
         } catch (\Throwable $e) {
             \wcf\functions\exception\logThrowable($e);
+        } finally {
+            $editor = new BackgroundjobEditor($this);
+            $editor->delete();
+            
         }
-        BackgroundQueueHandler::getInstance()->performJob($unserializedJob, true);
      }
 
 }

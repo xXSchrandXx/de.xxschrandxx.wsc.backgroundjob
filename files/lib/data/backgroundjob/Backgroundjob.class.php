@@ -4,6 +4,7 @@ namespace wcf\data\backgroundjob;
 
 use wcf\data\DatabaseObject;
 use wcf\system\background\BackgroundQueueHandler;
+use wcf\system\background\job\AbstractBackgroundJob;
 
 class Backgroundjob extends DatabaseObject
 {
@@ -24,11 +25,28 @@ class Backgroundjob extends DatabaseObject
      * time INT(10) $time
      */
 
-     public function execute()
+     /**
+      * Gets unserialize backgroundjob
+      * @return ?AbstractBackgroundJob
+      */
+     public function getUnserialized()
      {
         $unserializedJob = null;
         try {
             $unserializedJob = \unserialize($this->job);
+        } catch (\Throwable $e) {
+            \wcf\functions\exception\logThrowable($e);
+        }
+        return $unserializedJob;
+     }
+
+     /**
+      * Executes the job and deletes on success.
+      */
+     public function execute()
+     {
+        try {
+            $unserializedJob = $this->getUnserialized();
             if ($unserializedJob) {
                 BackgroundQueueHandler::getInstance()->performJob($unserializedJob, true);
             }
@@ -37,7 +55,6 @@ class Backgroundjob extends DatabaseObject
         } finally {
             $editor = new BackgroundjobEditor($this);
             $editor->delete();
-            
         }
      }
 

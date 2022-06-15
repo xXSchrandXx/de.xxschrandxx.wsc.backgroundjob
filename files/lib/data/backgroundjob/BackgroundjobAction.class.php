@@ -79,7 +79,7 @@ class BackgroundjobAction extends AbstractDatabaseObjectAction
         foreach ($this->getObjectIDs() as $jobID) {
             try {
                 $job = new Backgroundjob($jobID);
-                $infos[$jobID] = var_export($job->job);
+                $infos[$jobID] = var_export($job->getUnserialized());
             } catch (SystemException $e) {
                 \wcf\functions\exception\logThrowable($e);
             }

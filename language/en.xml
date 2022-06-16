@@ -2,4 +2,16 @@
 <language languagecode="en"
 	xmlns="https://www.woltlab.com"
 	xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://www.woltlab.com https://www.woltlab.com/XSD/5.5/language.xsd">
+	<category name="wcf.acp.menu">
+		<item name="wcf.acp.menu.link.devtools.backgroundjob"><![CDATA[BackgroundJobs]]></item>
+	</category>
+	<category name="wcf.acp.page">
+		<item name="wcf.acp.page.backgroundjobList.contentTitle"><![CDATA[BackgroundJobs]]></item>
+		<item name="wcf.acp.page.backgroundjobList.button.info"><![CDATA[Information]]></item>
+		<item name="wcf.acp.page.backgroundjobList.button.info.result"><![CDATA[Further information]]></item>
+		<item name="wcf.acp.page.backgroundjobList.button.execute"><![CDATA[Run]]></item>
+		<item name="wcf.acp.page.backgroundjobList.jobID"><![CDATA[ID]]></item>
+		<item name="wcf.acp.page.backgroundjobList.status"><![CDATA[Status]]></item>
+		<item name="wcf.acp.page.backgroundjobList.time"><![CDATA[Should be executed]]></item>
+	</category>
 </language>

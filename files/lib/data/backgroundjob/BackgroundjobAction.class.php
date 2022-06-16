@@ -56,34 +56,4 @@ class BackgroundjobAction extends AbstractDatabaseObjectAction
             }
         }
     }
-
-    /**
-     * list of permissions required to execute objects
-     * @var string[]
-     */
-    protected $permissionsInfo = ['admin.configuration.package.canInstallPackage'];
-
-    public function validateInfo()
-    {
-        // validate permissions
-        if (\is_array($this->permissionsInfo) && !empty($this->permissionsInfo)) {
-            WCF::getSession()->checkPermissions($this->permissionsInfo);
-        } else {
-            throw new PermissionDeniedException();
-        }
-    }
-
-    public function info()
-    {
-        $infos = [];
-        foreach ($this->getObjectIDs() as $jobID) {
-            try {
-                $job = new Backgroundjob($jobID);
-                $infos[$jobID] = var_export($job->getUnserialized());
-            } catch (SystemException $e) {
-                \wcf\functions\exception\logThrowable($e);
-            }
-        }
-        return $infos;
-    }
 }

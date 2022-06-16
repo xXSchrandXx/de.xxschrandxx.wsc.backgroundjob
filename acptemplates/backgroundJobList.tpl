@@ -80,7 +80,7 @@
 <script data-relocate="true">
 	require(["xXSchrandXx/Backgroundjob/BackgroundjobExecute", "Language"], function(BackgroundjobExecute, Language) {
 		Language.addObject({
-			'wcf.apc.page.backgroundjobList.button.info.result': '{lang}wcf.apc.page.backgroundjobList.button.info.result{/lang}'
+			'wcf.global.success': '{lang}wcf.global.success{/lang}'
 		});
 		new BackgroundjobExecute.default();
 	});

@@ -28,18 +28,34 @@ class Backgroundjob extends DatabaseObject
      */
 
     /**
+     * Unserializec job
+     * @var ?AbstractBackgroundJob
+     */
+    private $unserializedJob = null;
+
+    /**
      * Gets unserialize backgroundjob
      * @return ?AbstractBackgroundJob
      */
     public function getUnserialized()
     {
-        $unserializedJob = null;
-        try {
-            $unserializedJob = \unserialize($this->job);
-        } catch (\Throwable $e) {
-            \wcf\functions\exception\logThrowable($e);
+        if ($this->unserializedJob === null) {
+            try {
+                $this->unserializedJob = \unserialize($this->job);
+            } catch (\Throwable $e) {
+                \wcf\functions\exception\logThrowable($e);
+            }
         }
-        return $unserializedJob;
+        return $this->unserializedJob;
+    }
+
+    /**
+     * Returns the name of the class
+     * @return string
+     */
+    public function getClass()
+    {
+        return get_class($this->getUnserialized());
     }
 
     /**
@@ -48,13 +64,10 @@ class Backgroundjob extends DatabaseObject
      */
     public function getObjectVars()
     {
-        $arr = get_object_vars($this->getUnserialized());
+        $arr = (array) $this->getUnserialized();
         foreach ($arr as $key => $value) {
             // Check key
-            if ($key == '__PHP_Incomplete_Class_Name') {
-                $arr['Name'] = $arr[$key];
-                unset($arr[$key]);
-            } else if (preg_replace('/[[:^print:]]/', '', $key) == 'wcf\system\background\job\AbstractBackgroundJobfailures') {
+            if (preg_replace('/[[:^print:]]/', '', $key) == 'wcf\system\background\job\AbstractBackgroundJobfailures') {
                 $arr['failures'] = $arr[$key];
                 unset($arr[$key]);
             }

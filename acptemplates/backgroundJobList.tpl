@@ -18,6 +18,7 @@
     <div class="section tabularBox">
 		{foreach from=$objects item=$object}
 			<ul id="backgroundJobDetailDialog-{#$object->jobID}" style="display: none;">
+				<li><span>{lang}wcf.acp.page.backgroundjobList.name{/lang}: <kbd>{$object->getClass()}</kbd></span></li>
 				<li><span>{lang}wcf.acp.page.backgroundjobList.jobID{/lang}: <kbd>{#$object->jobID}</kbd></span></li>
 				<li><span>{lang}wcf.acp.page.backgroundjobList.status{/lang}: <kbd>{$object->status}</kbd></span></li>
 				<li><span>{lang}wcf.acp.page.backgroundjobList.time{/lang}: <kbd>{#$object->time}</kbd> (<span class="columnDate">{@$object->time|time}</span>)</span></li>

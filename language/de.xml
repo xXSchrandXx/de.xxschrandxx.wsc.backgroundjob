@@ -10,6 +10,7 @@
 		<item name="wcf.acp.page.backgroundjobList.button.info"><![CDATA[Informationen]]></item>
 		<item name="wcf.acp.page.backgroundjobList.button.info.result"><![CDATA[Weitere Informationen]]></item>
 		<item name="wcf.acp.page.backgroundjobList.button.execute"><![CDATA[Ausführen]]></item>
+		<item name="wcf.acp.page.backgroundjobList.name"><![CDATA[Klassennamen]]></item>
 		<item name="wcf.acp.page.backgroundjobList.jobID"><![CDATA[ID]]></item>
 		<item name="wcf.acp.page.backgroundjobList.status"><![CDATA[Status]]></item>
 		<item name="wcf.acp.page.backgroundjobList.time"><![CDATA[Soll ausgeführt werden]]></item>

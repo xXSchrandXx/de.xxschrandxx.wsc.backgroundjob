@@ -26,4 +26,14 @@ class BackgroundJobListPage extends MultipleLinkPage
      * @inheritDoc
      */
     public $activeMenuItem = 'wcf.acp.menu.link.devtools.backgroundjob';
+
+    /**
+     * @inheritDoc
+     */
+    public $neededModules = ['ENABLE_DEVELOPER_TOOLS'];
+
+    /**
+     * @inheritDoc
+     */
+    public $neededPermissions = ['admin.configuration.package.canInstallPackage'];
 }

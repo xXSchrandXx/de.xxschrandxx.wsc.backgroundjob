@@ -14,5 +14,7 @@
 		<item name="wcf.acp.page.backgroundjobList.jobID"><![CDATA[ID]]></item>
 		<item name="wcf.acp.page.backgroundjobList.status"><![CDATA[Status]]></item>
 		<item name="wcf.acp.page.backgroundjobList.time"><![CDATA[Should be executed]]></item>
+		<item name="wcf.acp.page.backgroundjobList.addTest"><![CDATA[Testing backgroundjob]]></item>
+		<item name="wcf.acp.page.backgroundjobList.addFailingTest"><![CDATA[Test background job with error]]></item>
 	</category>
 </language>

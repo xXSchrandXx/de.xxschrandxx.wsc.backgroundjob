@@ -6,8 +6,13 @@ use wcf\data\DatabaseObject;
 use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\background\job\AbstractBackgroundJob;
 use wcf\util\JSON;
-use wcf\util\StringUtil;
 
+/**
+ * @property-read int $jobID
+ * @property-read string $job
+ * @property-read string $status can be 'ready' or 'processing'
+ * @property-read int $time
+ */
 class Backgroundjob extends DatabaseObject
 {
     /**
@@ -19,13 +24,6 @@ class Backgroundjob extends DatabaseObject
      * @inheritDoc
      */
     protected static $databaseTableIndexName = 'jobID';
-
-    /*
-     * ObjectIdDatabaseTableColumn $jobID
-     * MEDIUMBLOB $job
-     * ENUM('ready', 'processing') $status
-     * time INT(10) $time
-     */
 
     /**
      * Unserializec job
@@ -86,16 +84,9 @@ class Backgroundjob extends DatabaseObject
      */
     public function execute()
     {
-        try {
-            $unserializedJob = $this->getUnserialized();
-            if ($unserializedJob) {
-                BackgroundQueueHandler::getInstance()->performJob($unserializedJob, true);
-            }
-        } catch (\Throwable $e) {
-            \wcf\functions\exception\logThrowable($e);
-        } finally {
-            $editor = new BackgroundjobEditor($this);
-            $editor->delete();
+        $unserializedJob = $this->getUnserialized();
+        if ($unserializedJob) {
+            BackgroundQueueHandler::getInstance()->performJob($unserializedJob, true);
         }
     }
 }

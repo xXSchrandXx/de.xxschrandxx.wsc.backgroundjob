@@ -1,87 +1,85 @@
 {include file='header' pageTitle='wcf.acp.menu.link.devtools.backgroundjob'}
 
 <header class="contentHeader">
-    <div class="contentHeaderTitle">
-        <h1 class="contentTitle">{lang}wcf.acp.page.backgroundjobList.contentTitle{/lang}</h1>
-    </div>
+	<div class="contentHeaderTitle">
+		<h1 class="contentTitle">{lang}wcf.acp.page.backgroundjobList.contentTitle{/lang}</h1>
+	</div>
+
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li>
+				<a href="{link controller='AddTestBackgroundJob'}{/link}" class="button">
+					{icon size=16 name='plus' type='solid'} {lang}wcf.acp.page.backgroundjobList.addTest{/lang}
+				</a>
+			</li>
+			<li>
+				<a href="{link controller='AddTestBackgroundJob'}fail=1{/link}" class="button">
+					{icon size=16 name='plus' type='solid'} {lang}wcf.acp.page.backgroundjobList.addFailingTest{/lang}
+				</a>
+			</li>
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {hascontent}
-<div class="paginationTop">
-    {content}
-    	{pages print=true assign=pagesLinks controller="BackgroundList" link="pageNo=%d"}
-    {/content}
-</div>
+	<div class="paginationTop">
+		{content}
+			{pages print=true assign=pagesLinks controller="BackgroundList" link="pageNo=%d"}
+		{/content}
+	</div>
 {/hascontent}
 
 {if $objects|count}
-    <div class="section tabularBox">
-		{foreach from=$objects item=$object}
-			<ul id="backgroundJobDetailDialog-{#$object->jobID}" style="display: none;">
-				<li><span>{lang}wcf.acp.page.backgroundjobList.name{/lang}: <kbd>{$object->getClass()}</kbd></span></li>
-				<li><span>{lang}wcf.acp.page.backgroundjobList.jobID{/lang}: <kbd>{#$object->jobID}</kbd></span></li>
-				<li><span>{lang}wcf.acp.page.backgroundjobList.status{/lang}: <kbd>{$object->status}</kbd></span></li>
-				<li><span>{lang}wcf.acp.page.backgroundjobList.time{/lang}: <kbd>{#$object->time}</kbd> (<span class="columnDate">{@$object->time|time}</span>)</span></li>
-				<li>
-					<hr />
-					<ul>
-						{foreach from=$object->getObjectVars() key=$key item=$value}
-							<li><span>{$key}: <kbd>{$value|newlineToBreak}</kbd></span></li>
-						{/foreach}
-					</ul>
-				</li>
-			</ul>
-			<script data-relocate="true">
-				$(function() {
-					$('#backgroundJobDetail-{#$object->jobID}').click(function() {
-						$('#backgroundJobDetailDialog-{#$object->jobID}').wcfDialog({
-							title: '{lang}wcf.acp.page.backgroundjobList.button.info.result{/lang}'
-						});
-					});
-				});
-			</script>
-		{/foreach}
-        <table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\backgroundjob\BackgroundjobAction">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>{lang}wcf.acp.page.backgroundjobList.jobID{/lang}</th>
-                    <th>{lang}wcf.acp.page.backgroundjobList.status{/lang}</th>
+	<div class="section tabularBox">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\backgroundjob\BackgroundjobAction">
+			<thead>
+				<tr>
+					<th></th>
+					<th>{lang}wcf.acp.page.backgroundjobList.jobID{/lang}</th>
+					<th>{lang}wcf.acp.page.backgroundjobList.status{/lang}</th>
 					<th>{lang}wcf.acp.page.backgroundjobList.time{/lang}</th>
-                </tr>
-            </thead>
-            <tbody>
-                {foreach from=$objects item=object}
-                    <tr class="jsObjectActionObject" data-object-id="{@$object->jobID}">
-                        <td class="columnIcon">
-							<a id="backgroundJobDetail-{#$object->jobID}" title="{lang}wcf.acp.page.backgroundjobList.button.info{/lang}" class="jsTooltip">
-								<span class="icon icon16 fa-info"></span>
+				</tr>
+			</thead>
+			<tbody class="jsReloadPageWhenEmpty">
+				{foreach from=$objects item=object}
+					<tr class="jsObjectActionObject" data-object-id="{@$object->jobID}">
+						<td class="columnIcon">
+							<a href="#" title="{lang}wcf.acp.page.backgroundjobList.button.info{/lang}" class="jsInfo jsTooltip">
+								{icon name='info'}
+							</a>
+							<a href="#" title="{lang}wcf.acp.page.backgroundjobList.button.execute{/lang}" class="jsExecute jsTooltip">
+								{icon name='play'}
 							</a>
 							{objectAction action="delete" objectTitle=$object->jobID}
-							<a href="#" title="{lang}wcf.acp.page.backgroundjobList.button.execute{/lang}" class="backgroundjobExecuteButton jsTooltip">
-								<span class="icon icon16 fa-play"></span>
-							</a>
-                            {event name='rowButtons'}
-                        </td>
-                        <td class="columnID">{#$object->jobID}</td>
-                        <td class="columnText">{$object->status}</td>
-                        <td class="columnDate">{@$object->time|time}</td>
-                    </tr>
+
+							{event name='rowButtons'}
+						</td>
+						<td class="columnID">{#$object->jobID}</td>
+						<td class="columnText">{$object->status}</td>
+						<td class="columnDate">{@$object->time|time}</td>
+					</tr>
 				{/foreach}
-            </tbody>
-        </table>
-    </div>
+			</tbody>
+		</table>
+	</div>
 {else}
-    <p class="info">{lang}wcf.global.noItems{/lang}</p>
+	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}
+
+{hascontent}
+	<div class="paginationBottom">
+		{content}
+			{@$pagesLinks}
+		{/content}
+	</div>
+{/hascontent}
 
 {include file='footer'}
 
 <script data-relocate="true">
-	require(["xXSchrandXx/Backgroundjob/BackgroundjobExecute", "Language"], function(BackgroundjobExecute, Language) {
-		Language.addObject({
-			'wcf.global.success': '{lang}wcf.global.success{/lang}'
-		});
-		new BackgroundjobExecute.default();
+	require(["xXSchrandXx/Backgroundjob/BackgroundjobUi", "WoltLabSuite/Core/Language"], function(BackgroundjobUi, Language) {
+		Language.registerPhrase('wcf.acp.page.backgroundjobList.button.info.result', '{jslang}wcf.acp.page.backgroundjobList.button.info.result{/jslang}');
+		new BackgroundjobUi.default();
 	});
 </script>
